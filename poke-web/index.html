@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumir API de Pokémon</title>
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="pokemonContainer"></div>
+
+    <script>
+        // Hacer una solicitud GET a la API de Pokemon
+        fetch('http://localhost:3000/pokemon')
+    .then(response => response.json())
+    .then(pokemonArray => {
+        // Obtener el contenedor donde se mostraran las tarjetas de Pokémon
+        const pokemonContainer = document.getElementById('pokemonContainer');
+
+        // Iterar sobre cada Pokémon en el array
+        pokemonArray.forEach(pokemon => {
+            // Crear una tarjeta para el Pokémon
+            const card = document.createElement('div');
+            card.classList.add('card');
+
+            // Agregar la información del Pokémon a la tarjeta
+            card.innerHTML = `
+                <h2>${pokemon.nombre}</h2>
+                <img src='${pokemon.img}'></img>
+                <p>ID: ${pokemon.id}</p>
+                <p>Tipo: ${pokemon.tipo}</p>
+            `;
+
+            // Agregar la tarjeta al contenedor
+            pokemonContainer.appendChild(card);
+        });
+    })
+    .catch(error => console.error('Error al obtener datos de la API:', error));
+
+    </script>
+</body>
+</html>
